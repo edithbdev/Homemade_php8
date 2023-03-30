@@ -1,0 +1,25 @@
+{
+    "name": "edith/homemade",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Service\\": "src/Service/",
+            "Controller\\": "src/Controller/",
+            "Model\\": "src/Model/"
+        }
+    },
+    "authors": [
+        {
+            "name": "edithbdev",
+            "email": "edith.toubi@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^5.0",
+        "symfony/http-kernel": "^6.2",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

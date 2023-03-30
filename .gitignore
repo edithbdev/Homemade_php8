@@ -1,0 +1,11 @@
+/.env
+/.env.*.local
+/.env.dev
+/var/
+/vendor/
+
+/.contributing.md
+/.contributingInstall.md
+/doc/
+/composer.lock
+/dockerphp/ssl/

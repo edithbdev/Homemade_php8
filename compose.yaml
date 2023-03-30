@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  app:
+    container_name: php8
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DB_PROVIDER: MySQL
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+    env_file:
+      - .env.dev
+    volumes:
+      - ./:/var/www/html
+      -  /var/www/html/vendor
+    ports:
+      - "8888:80"
+      - "443:443"  
+  db:
+    container_name: db
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - homemade-mysql-db:/var/lib/mysql
+    environment:
+      DATABASE_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+    ports:
+      - "9906:3306"
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+  mailer:
+    image: mailhog/mailhog
+    container_name: mailer
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+volumes:
+  homemade-mysql-db:
