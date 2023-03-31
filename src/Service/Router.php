@@ -37,6 +37,24 @@ class Router
             "MainController",
             "index"
         ],
+        "user_register" => [
+            "register",
+            "GET|POST",
+            "User\RegisterController",
+            "register"
+        ],
+        "user_login" => [
+            "login",
+            "GET|POST",
+            "User\LoginController",
+            "login"
+        ],
+        "user_logout" => [
+            "logout",
+            "GET",
+            "User\LogoutController",
+            "logout"
+        ],
     ];
 
     /**

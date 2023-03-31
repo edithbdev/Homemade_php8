@@ -4,6 +4,7 @@
 
 Ce projet est un site vitrine pour mettre en avant le travail des artisans.
 Il est réalisé avec PHP 8, Docker, Apache, MySQL et Bootstrap.
+J'utilise le modèle MVC (Model View Controller) pour structurer mon code.
 
 ## Technologies utilisées
 
@@ -20,12 +21,13 @@ Il est réalisé avec PHP 8, Docker, Apache, MySQL et Bootstrap.
 
 - [ ] CRUD
 - [x] Routing
-- [ ] Register
-- [ ] Login
-- [ ] Logout
+- [x] Register
+- [x] Login
+- [x] Logout
 - [ ] Password forgotten
 - [ ] Password reset
 - [ ] Email confirmation
+- [ ] Recherche par critères  
 - [ ] [...]
 
 ## Installation
@@ -50,10 +52,10 @@ cp .env.example .env.dev
 
 ### Certificat SSL (vous devez avoir mkcert préalablement installé)
 
-- créer un dossier `ssl` dans le dossier `dockerphp`
+- Créer un dossier `ssl` dans le dossier `dockerphp`
 - Lancer la commande `mkcert -install`
 - Lancer la commande `mkcert localhost 127.0.0.1 ::1`
-- on renomme le certificat et la clé
+- Renommer le certificat et la clé
 ```bash
 mv localhost.pem cert.pem
 mv localhost-key.pem cert-key.pem
@@ -90,10 +92,3 @@ docker cp dump.sql db:/docker-entrypoint-initdb.d/dump.sql`
 ## Auteur
 
 Edith Bredon - [edithbredon.fr](https://www.edithbredon.fr/)
-
-
-
-
-
-
-

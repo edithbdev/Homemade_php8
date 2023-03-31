@@ -14,7 +14,6 @@
         </p>
     </div>
     <div class="col-6">
-
         <h1>Les derniers créateurs...</h1>
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">

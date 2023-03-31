@@ -24,11 +24,12 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/* password = Motdepasse1 */
 INSERT INTO `user` VALUES 
-(1,'nom1','prenom1','mail1@gmail.fr','mot_de_passe1','token1','admin',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(2,'nom2','prenom2','mail2@gmail.fr','mot_de_passe2','token2','creator',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(3,'nom3','prenom3','mail3@gmail.fr','mot_de_passe3','token3','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(4,'nom4','prenom4','mail4@gmail.fr','mot_de_passe4','token4','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
+(1,'nom1','prenom1','mail1@gmail.fr','$2y$10$fKlFbOLEQleQgg/ZJUFag.Ie2.ZFU48OdHo9oEKHPfUZm9FTUBM4C','e50b173f4b343771873090875ba122c31787a866f58d448165fedeeb30624781','admin',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(2,'nom2','prenom2','mail2@gmail.fr','$2y$10$aY3sqKvUdq5MhNEdPkO11e/oU34DxoUAp1kh5zE94XMQflgVGl0xq','65c8f67fbabdaca7579d44e88111df27276942311da079d2e108a7740c7347c9','creator',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,'nom3','prenom3','mail3@gmail.fr','$2y$10$FeXdrXdFYNBCRyThgKc54eO3RL7w2rWmlu4Y9yhL9WaUJT7/ujLDG','035c16778c36e7c7d61552c3992c9bf449c7103f33e209b911e402b92f4dcf1c','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(4,'nom4','prenom4','mail4@gmail.fr','$2y$10$hA8VKa31mxpJc6BwhHxph.r0dmnV7z2D3i8bC/31tPHVHpdPSLNo.','d4cb014d02b09f7b97975c22d0e75f80ebf353f5488b4b377d5bccb90d32c94e','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
