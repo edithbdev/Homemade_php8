@@ -1,4 +1,9 @@
 version: '3.8'
+
+networks:
+  my_network:
+    driver: bridge
+
 services:
   app:
     container_name: php8
@@ -20,6 +25,9 @@ services:
     ports:
       - "8888:80"
       - "443:443"  
+    networks:
+      - my_network
+
   db:
     container_name: db
     image: mysql:8.0
@@ -31,6 +39,9 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
     ports:
       - "9906:3306"
+    networks:
+      - my_network
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
@@ -41,13 +52,22 @@ services:
       - PMA_ARBITRARY=1
     depends_on:
       - db
+    networks:
+      - my_network
+
   mailer:
-    image: mailhog/mailhog
+    image: mailhog/mailhog:latest
     container_name: mailer
     restart: always
+    volumes:
+      - mailer:/var/lib/mailhog
     ports:
       - 1025:1025
       - 8025:8025
+    networks:
+      - my_network
+
 
 volumes:
   homemade-mysql-db:
+  mailer:

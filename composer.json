@@ -20,6 +20,7 @@
     "require": {
         "symfony/var-dumper": "^5.0",
         "symfony/http-kernel": "^6.2",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "swiftmailer/swiftmailer": "^6.3"
     }
 }

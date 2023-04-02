@@ -2,9 +2,9 @@
 
 namespace Model;
 
-use PDO;
 use Exception;
 use Service\PDOConnector;
+use Service\SendMail;
 
 /**
  * Model User
@@ -414,16 +414,14 @@ class User
         $pdo = PDOConnector::getInstance();
         $request = $pdo->query('SELECT * FROM user WHERE email = "' . $email . '"');
         $fetchUser = $request->fetchObject(self::class);
-        // dd($fetchUser->getPassword());
         if ($fetchUser) {
-            //on vérifie que le mot de passe est correct
-            if (!password_verify($password, $fetchUser->getPassword())) {
-              
-                return false;
-            } else {
-                //on stocke les informations de l'utilisateur dans la session
+            //on vérifie que le mot de passe est correct et qu'il a validé son compte
+            if (password_verify($password, $fetchUser->getPassword()) && $fetchUser->getIs_active() == 1) {
                 $_SESSION['user'] = $fetchUser;
                 return true;
+            } else {
+                $_SESSION['error'] = 'Vous n\'avez pas validé votre compte';
+                return false;
             }
         } else {
             $_SESSION['error'] = 'L\'email ou le mot de passe est incorrect';
@@ -445,7 +443,20 @@ class User
             return true;
         }
     }
-    
+
+    /**
+     * Récupérér un user par son id
+     * 
+     * @param int $id
+     */
+    public static function find($id)
+    {
+        $pdo = PDOConnector::getInstance();
+        $request = $pdo->query('SELECT * FROM user WHERE id = ' . $id);
+        $fetchUser = $request->fetchObject(self::class);
+        return $fetchUser;
+    }
+
     /**
      * Insertion d'un user
      * 
@@ -485,14 +496,52 @@ class User
         if ($request) {
             //on récupère l'id de l'utilisateur inséré
             $this->id = $user_id;
-            $_SESSION['success'] = 'Votre compte a bien été créé, vous pouvez vous connecter !';
+            $confirmationUrl = 'http://localhost:8888/emailConfirmation?token=' . $this->token;
+            $sendEmail = new SendMail();
+            $sendEmail->send(
+                $this->email,
+                'Confirmation de votre compte',
+                'Bonjour ' . $this->firstname . ' ' . $this->lastname . ',<br><br>
+                Merci pour votre inscription !, merci de cliquer sur le lien suivant pour activer votre compte :<br><br>
+                <a href="' . $confirmationUrl . '"> Activer mon compte </a>
+                <br><br>
+                L\'équipe de Homemade'
+
+            );
+            $_SESSION['success'] = 'Votre compte a bien été créé, un email de confirmation vous a été envoyé';
             return true;
         } else {
             $_SESSION['error'] = 'Une erreur est survenue, veuillez réessayer ultérieurement';
             return false;
         }
-
-        return $request;
     }
 
+    /**
+     * Activation du compte utilisateur
+     * 
+     * @param string $token Token d'activation du compte
+     * @return boolean
+     */
+    public static function activateAccount($token)
+    {
+        $pdo = PDOConnector::getInstance();
+        $request = $pdo->query("UPDATE user SET is_active = 1 WHERE token = ?", [$token]);
+
+        //on vérifie que le user n'est pas déjà activé
+        $status = $pdo->query('SELECT * FROM user WHERE token = "' . $token . '"');
+        $fetchUser = $status->fetchObject(self::class);
+
+        if ($fetchUser->getIs_active() == 1) {
+            $_SESSION['error'] = 'Votre compte est déjà activé, vous pouvez vous connecter';
+            return false;
+        } else {
+            if ($request) {
+                $_SESSION['success'] = 'Votre compte a bien été activé';
+                return true;
+            } else {
+                $_SESSION['error'] = 'Une erreur est survenue, veuillez réessayer ultérieurement';
+                return false;
+            }
+        }
+    }
 }

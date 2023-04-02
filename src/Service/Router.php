@@ -32,10 +32,10 @@ class Router
      */
     private static $routes = [
         "main_index" => [
-            "",
-            "GET",
-            "MainController",
-            "index"
+            "", // route
+            "GET", // méthode
+            "MainController", // contrôleur
+            "index" // méthode du contrôleur
         ],
         "user_register" => [
             "register",
@@ -54,6 +54,12 @@ class Router
             "GET",
             "User\LogoutController",
             "logout"
+        ],
+        "user_emailConfirmation" => [
+            "emailConfirmation:token",
+            "GET",
+            "User\EmailConfirmationController",
+            "emailConfirmation"
         ],
     ];
 

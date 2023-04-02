@@ -26,7 +26,7 @@ J'utilise le modèle MVC (Model View Controller) pour structurer mon code.
 - [x] Logout
 - [ ] Password forgotten
 - [ ] Password reset
-- [ ] Email confirmation
+- [x] Email de confirmation d'inscription
 - [ ] Recherche par critères  
 - [ ] [...]
 
@@ -88,6 +88,9 @@ docker cp dump.sql db:/docker-entrypoint-initdb.d/dump.sql`
 ## Accéder à phpMyAdmin
 - [http://localhost:8081](http://localhost:8081)
 - Entrer le nom d'utilisateur et le mot de passe de la base de données
+
+## Accèder au mailhog
+- [http://localhost:8025](http://localhost:8025)
 
 ## Auteur
 

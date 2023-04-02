@@ -36,7 +36,7 @@
                         <label class="form-label mt-2" for="inputPasswordConfirm">Confirmer le mot de passe</label>
                         <input type="password" class="form-control" name="password_confirm" id="password_confirm" />
                     </div>
-                    <button type="submit" name="register" id="register" class="btn btn-sm btn-primary btn-lg btn-block my-2">
+                    <button type="submit" name="register" id="register" class="btn btn-outline-primary btn-lg btn-block w-100 my-3">
                         S'inscrire
                     </button>
                     <p class="small text-right">

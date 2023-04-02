@@ -58,9 +58,9 @@ $page = $_GET['page'] ?? 'home';
             <?php endif; ?>
           </div>
           <div class="col-6 w-100">
-          <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') : ?>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') : ?>
               <a href="/admin" class="btn btn-sm btn-outline-light btn-lg btn-block">Administration</a>
-          <?php endif; ?>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -71,8 +71,17 @@ $page = $_GET['page'] ?? 'home';
           <li class="nav-item">
             <a class="nav-link <?php if ($page === 'home') echo 'active'; ?>" aria-current="page" href="<?= self::generateUrl('main_index') ?>">Accueil</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#">Link</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Catégories</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="#">Link</a>

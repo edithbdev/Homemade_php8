@@ -37,7 +37,7 @@
                     <label class="form-label mt-2" for="password_login">Mot de passe</label>
                     <input type="password" class="form-control" name="password_login" id="password_login" />
                 </div>
-                <button type="submit" name="login" id="login" class="btn btn-sm btn-primary btn-lg btn-block my-2">
+                <button type="submit" name="login" id="login" class="btn btn-outline-primary btn-lg btn-block w-100 my-3">
                     Se connecter
                 </button>
                 <p class="small text-right">

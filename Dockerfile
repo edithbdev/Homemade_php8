@@ -22,6 +22,8 @@ COPY ./dockerphp/apache/000-default.conf /etc/apache2/sites-available/000-defaul
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN apt-get update && apt-get install -y \
+    curl \
+    file \
     git \
     unzip \
     libicu-dev \
@@ -36,12 +38,10 @@ RUN apt-get update && apt-get install -y \
     nano \
     apt-transport-https \
     lsb-release \
-    # configure les extensions PHP nécessaires
     && docker-php-ext-configure intl \
     && docker-php-ext-configure zip \
     && docker-php-ext-configure gd --with-jpeg \ 
     && docker-php-ext-configure soap --enable-soap \ 
-    # installe les extensions PHP nécessaires
     && docker-php-ext-install -j$(nproc) \
     intl \
     pdo_mysql \
@@ -49,7 +49,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     gd \
     soap \
-    # supprime les fichiers temporaires du système
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug
