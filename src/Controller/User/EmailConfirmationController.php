@@ -3,7 +3,6 @@
 namespace Controller\User;
 
 use Model\User;
-use Service\View;
 use Controller\BaseController;
 
 /**
@@ -21,14 +20,8 @@ class EmailConfirmationController extends BaseController
     {
         $token = $_GET['token'];
 
-        $result = User::activateAccount($token);
-
-       
+        User::activateAccount($token);
 
         $this->redirect('user_login');
-
-        return View::returnTemplate('user/emailConfirmation', [
-            'result' => $result ?? false
-        ]);
     }  
 }

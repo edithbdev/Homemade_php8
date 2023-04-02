@@ -420,7 +420,7 @@ class User
                 $_SESSION['user'] = $fetchUser;
                 return true;
             } else {
-                $_SESSION['error'] = 'Vous n\'avez pas validé votre compte';
+                $_SESSION['error'] = 'Vous n\'avez pas validé votre compte ou le mot de passe est incorrect !';
                 return false;
             }
         } else {
@@ -526,22 +526,65 @@ class User
     {
         $pdo = PDOConnector::getInstance();
         $request = $pdo->query("UPDATE user SET is_active = 1 WHERE token = ?", [$token]);
-
-        //on vérifie que le user n'est pas déjà activé
-        $status = $pdo->query('SELECT * FROM user WHERE token = "' . $token . '"');
-        $fetchUser = $status->fetchObject(self::class);
-
-        if ($fetchUser->getIs_active() == 1) {
-            $_SESSION['error'] = 'Votre compte est déjà activé, vous pouvez vous connecter';
-            return false;
-        } else {
             if ($request) {
-                $_SESSION['success'] = 'Votre compte a bien été activé';
-                return true;
+                    $_SESSION['success'] = 'Votre compte a bien été activé, vous pouvez vous connecter';
+                    return true;
             } else {
                 $_SESSION['error'] = 'Une erreur est survenue, veuillez réessayer ultérieurement';
                 return false;
             }
+    }
+
+    /**
+     * Oubli du mot de passe
+     * 
+     * @param string $email Email de l'utilisateur
+     * @return boolean
+     */
+    public static function forgotPassword($email)
+    {
+        $pdo = PDOConnector::getInstance();
+        $request = $pdo->query('SELECT * FROM user WHERE email = "' . $email . '"');
+        $fetchUser = $request->fetchObject(self::class);
+        if ($fetchUser) {
+            $resetPasswordUrl = 'http://localhost:8888/resetPassword?token=' . $fetchUser->getToken();
+            $sendEmail = new SendMail();
+            $sendEmail->send(
+                $fetchUser->getEmail(),
+                'Réinitialisation de votre mot de passe',
+                'Bonjour ' . $fetchUser->getFirstname() . ' ' . $fetchUser->getLastname() . ',<br><br>
+                Vous avez demandé à réinitialiser votre mot de passe, merci de cliquer sur le lien suivant pour le faire :<br><br>
+                <a href="' . $resetPasswordUrl . '"> Réinitialiser mon mot de passe </a>
+                <br><br>
+                L\'équipe de Homemade'
+            );
+            $_SESSION['success'] = 'Un email vous a été envoyé pour réinitialiser votre mot de passe';
+            return true;
+        } else {
+            $_SESSION['error'] = 'L\'email n\'existe pas';
+            return false;
+        }
+    }
+
+    /**
+     * Réinitialisation du mot de passe
+     * 
+     * @param string $token Token de réinitialisation du mot de passe
+     * @param string $password Nouveau mot de passe
+     * @return boolean
+     */
+    public static function resetPassword($token, $password)
+    {
+        $pdo = PDOConnector::getInstance();
+        $password = (string)$password;
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        $request = $pdo->query("UPDATE user SET password = ? WHERE token = ?", [$password, $token]);
+        if ($request) {
+            $_SESSION['success'] = 'Votre mot de passe a bien été réinitialisé, vous pouvez vous connecter';
+            return true;
+        } else {
+            $_SESSION['error'] = 'Une erreur est survenue, veuillez réessayer ultérieurement';
+            return false;
         }
     }
 }

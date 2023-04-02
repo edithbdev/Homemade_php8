@@ -61,6 +61,18 @@ class Router
             "User\EmailConfirmationController",
             "emailConfirmation"
         ],
+        "user_forgotPassword" => [
+            "forgotPassword",
+            "GET|POST",
+            "User\ForgotPasswordController",
+            "forgotPassword"
+        ],
+        "user_resetPassword" => [
+            "resetPassword:token",
+            "GET|POST",
+            "User\ResetPasswordController",
+            "resetPassword"
+        ],
     ];
 
     /**

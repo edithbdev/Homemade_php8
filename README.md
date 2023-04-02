@@ -24,8 +24,8 @@ J'utilise le modèle MVC (Model View Controller) pour structurer mon code.
 - [x] Register
 - [x] Login
 - [x] Logout
-- [ ] Password forgotten
-- [ ] Password reset
+- [x] Password forgotten
+- [x] Password reset
 - [x] Email de confirmation d'inscription
 - [ ] Recherche par critères  
 - [ ] [...]

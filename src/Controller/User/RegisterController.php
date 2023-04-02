@@ -96,7 +96,7 @@ class RegisterController extends BaseController
                 $errors['password'] = 'Le mot de passe est obligatoire';
             } else {
                 if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{8,}$/', $_POST['password'])) {
-                    $errors['password'] = 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre';
+                    $errors['password'] = 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre';
                 }
             }
         }
