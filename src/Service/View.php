@@ -1,6 +1,6 @@
 <?php
 
-namespace Service;
+namespace App\Service;
 
 use Exception;
 
@@ -20,10 +20,11 @@ class View
      * Renvoie le résultat d'un template traitant les données qui lui sont données
      *
      * @param string $templateName le nom du fichier template à traiter
-     * @param array $vars les variables disponibles pour le template
-     * @return string le template traité
+     * @param array<string, mixed> $vars les variables à rendre accessibles dans le template
+     * 
+     * @return string|false le résultat du template
      */
-    public static function returnTemplate(string $templateName, array $vars = [])
+    public static function returnTemplate(string $templateName, array $vars = []): string|false
     {
         if (file_exists(self::$TEMPLATE_PATH . $templateName . ".php")) { // On vérifie que le template existe
             extract($vars); // On extrait les variables pour les rendre accessibles dans le template
@@ -40,10 +41,10 @@ class View
      * Helper pour générer un chemin à partir d'un template à l'aide du routeur
      *
      * @param string $routeName le nom de la route
-     * @param array $routeArgs les arguments pour générer dynamiquement le chemin
+     * @param array<string, mixed> $routeArgs les arguments de la route
      * @return string le chemin généré
      */
-    private static function generateUrl($routeName, $routeArgs = [])
+    public static function generateUrl($routeName, $routeArgs = []): string
     {
         return Router::generate($routeName, $routeArgs);
     }

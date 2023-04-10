@@ -1,4 +1,4 @@
-<?= self::returnTemplate('partials/header') ?>
+<?php include __DIR__ . '/../partials/header.php'?>
 
 <section class="row mt-5 mb-5 w-100">
     <div class="col-6">
@@ -17,20 +17,30 @@
         <h1>Les derniers créateurs...</h1>
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
-                <?php foreach ($creators as $key => $creator) : ?>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?= $key ?>" class="<?= $key === 0 ? 'active' : '' ?>" aria-current="true" aria-label="Slide <?= $key ?>"></button>
-                <?php endforeach; ?>
+                <?php if (isset($creators)): ?>
+                    <?php foreach ($creators as $key => $creator): ?>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?=$key?>" class="<?=$key === 0 ? 'active' : ''?>" aria-current="true" aria-label="Slide <?=$key?>"></button>
+                    <?php endforeach;?>
+                <?php endif;?>
             </div>
             <div class="carousel-inner">
-                <?php foreach ($creators as $key => $creator) : ?>
-                    <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
-                        <img src="/assets/images/<?= $creator->getImage() ?>" class="d-block w-100" alt="<?= $creator->getImage() ?>">
+            <?php if (isset($creators)): ?>
+                <?php foreach ($creators as $key => $creator): ?>
+                    <div class="carousel-item <?=$key === 0 ? 'active' : ''?>">
+                        <img src="/assets/images/<?=$creator->getImage()?>" class="d-block w-100" alt="<?=$creator->getImage()?>">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5><?= $creator->getFullName() ?></h5>
-                            <p><?= $creator->getDescription() ?></p>
+                            <h5><?=$creator->getFullName()?></h5>
+                            <p><?=$creator->getDescription()?></p>
+                        <?php foreach ($creator->getCategories() as $category): ?>
+                            <?php $categories = explode(',', $category);?>
+                            <?php foreach ($categories as $category): ?>
+                                <a href="/category/<?=$category?>" class="btn btn-primary"><?=$category?></a>
+                            <?php endforeach;?>
+                        <?php endforeach;?>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach;?>
+            <?php endif;?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -44,4 +54,4 @@
     </div>
 </section>
 
-<?= self::returnTemplate('partials/footer') ?>
+<?php include __DIR__ . '/../partials/footer.php'?>

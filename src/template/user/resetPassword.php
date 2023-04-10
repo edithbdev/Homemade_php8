@@ -1,6 +1,6 @@
-<?= self::returnTemplate('partials/header') ?>
+<?php include __DIR__ . '/../partials/header.php' ?>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-3 mb-5 w-100">
     <div class="col-lg-5 col-md-6 col-sm-6 col-12">
         <div class="card shadow-lg border-0 rounded-lg mt-3 mb-3">
             <div class="card-header">
@@ -48,3 +48,5 @@
         </div>
     </div>
 </div>
+
+<?php include __DIR__ . '/../partials/footer.php' ?>

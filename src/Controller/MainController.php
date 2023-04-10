@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
-use Model\Creator;
-use Service\View;
+use App\Model\Creator;
+use App\Service\View;
 
 /**
  * Main Controller
@@ -14,14 +14,14 @@ class MainController extends BaseController
     /**
      * Gérer la page d'accueil (main_home route)
      *
-     * @return void
+     * @return string|false
      */
-    public function index()
+    public function index(): string|false
     {
         $creators = Creator::findLasts();
 
         return View::returnTemplate('main/index', [
-            'creators' => $creators
+            'creators' => $creators,
         ]);
     }
 }

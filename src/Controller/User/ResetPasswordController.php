@@ -1,10 +1,10 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Model\User;
-use Service\View;
-use Controller\BaseController;
+use App\Model\User;
+use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * ResetPassword Controller 
@@ -15,9 +15,9 @@ class ResetPasswordController extends BaseController
     /**
      * Gérer la page de réinitialisation du mot de passe (user_resetPassword route)
      * 
-     * @return void
+     * @return string|false
      */
-    public function resetPassword()
+    public function resetPassword(): string|false
     {
 
         $token = $_GET['token'];
@@ -40,18 +40,18 @@ class ResetPasswordController extends BaseController
         }
 
         return View::returnTemplate('user/resetPassword', [
-            'errors' => $errors ?? [],
-            'password_resetPassword' => $password ?? '',
-            'passwordConfirm_resetPassword' => $passwordConfirm ?? ''
+            'errors' => $errors ? $errors : [],
+            'password_resetPassword' => isset($password) ? $password : '',
+            'passwordConfirm_resetPassword' => isset($passwordConfirm) ? $passwordConfirm : ''
         ]);
     }
 
     /**
      * Validate ResetPassword form
      * 
-     * @return array
+     * @return array<string>
      */
-    private function validateResetPasswordForm()
+    private function validateResetPasswordForm(): array
     {
         $errors = [];
 

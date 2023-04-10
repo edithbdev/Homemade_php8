@@ -1,22 +1,13 @@
 <?php
 
-namespace Service;
+namespace App\Service;
 
 /**
  * L'envoi de mail
  */
  
 class SendMail
-{
-    public function __construct()
-    {
-        define('MAIL_HOST', $_ENV['MAIL_HOST']);
-        define('MAIL_PORT', $_ENV['MAIL_PORT']);
-        define('MAIL_USERNAME', $_ENV['MAIL_USERNAME']);
-        define('MAIL_PASSWORD', $_ENV['MAIL_PASSWORD']);
-        define('MAIL_ENCRYPTION', $_ENV['MAIL_ENCRYPTION']);
-    }
-        
+{ 
     /**
      * Envoi un mail
      *
@@ -24,10 +15,17 @@ class SendMail
      * @param string $subject le sujet du mail
      * @param string $message le message du mail
      * @param string $from l'adresse mail de l'expéditeur
-     * @return boolean
+     * @return boolean true si l'envoi a réussi, false sinon
      */
-    public static function send(string $to, string $subject, string $message, string $from = "no-reply@homemade"): bool
+    public static function send(string $to, string $subject, string $message, string $from ='no-reply@homemade'): bool
     {
+        define('MAIL_HOST', $_ENV['MAIL_HOST']);
+        define('MAIL_PORT', $_ENV['MAIL_PORT']);
+        define('MAIL_USERNAME', $_ENV['MAIL_USERNAME']);
+        define('MAIL_PASSWORD', $_ENV['MAIL_PASSWORD']);
+        define('MAIL_ENCRYPTION', $_ENV['MAIL_ENCRYPTION']);
+        
+
         $transport = (new \Swift_SmtpTransport(MAIL_HOST, MAIL_PORT, MAIL_ENCRYPTION))
             ->setUsername(MAIL_USERNAME)
             ->setPassword(MAIL_PASSWORD);
@@ -39,6 +37,6 @@ class SendMail
             ->setTo([$to])
             ->setBody($message, 'text/html');
 
-        return $mailer->send($message);
+        return $mailer->send($message) > 0;
     }
 }

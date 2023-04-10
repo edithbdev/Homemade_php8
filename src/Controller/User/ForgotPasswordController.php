@@ -1,10 +1,10 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Model\User;
-use Service\View;
-use Controller\BaseController;
+use App\Model\User;
+use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * ForgotPassword Controller 
@@ -15,9 +15,9 @@ class ForgotPasswordController extends BaseController
     /**
      * Gérer la page de mot de passe oublié (user_forgotPassword route)
      * 
-     * @return void
+     * @return string|false
      */
-    public function forgotPassword()
+    public function forgotPassword(): string|false
     {
             $errors = [];
     
@@ -33,7 +33,7 @@ class ForgotPasswordController extends BaseController
             } 
 
             return View::returnTemplate('user/forgotPassword', [
-                'errors' => $errors ?? [],
+                'errors' => $errors ? $errors : [],
                 'email' => $email ?? ''
             ]);
         }
@@ -41,9 +41,9 @@ class ForgotPasswordController extends BaseController
         /**
          * Validate ForgotPassword form
          * 
-         * @return array
+         * @return array <string, string> $errors
          */
-        private function validateForgotPasswordForm()
+        private function validateForgotPasswordForm(): array
         {
             $errors = [];
     

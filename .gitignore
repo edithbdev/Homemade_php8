@@ -1,6 +1,7 @@
 /.env
 /.env.*.local
 /.env.dev
+/.env.test
 /var/
 /vendor/
 
@@ -8,4 +9,7 @@
 /.contributingInstall.md
 /doc/
 /composer.lock
-/dockerphp/ssl/
+/docker/ssl/
+/coverage/
+/doc/
+/.phpunit.result.cache

@@ -1,6 +1,7 @@
 /* script de création de la base de données */
 /* création de la base de données */
 DROP DATABASE IF EXISTS `homemade`;
+SET NAMES utf8mb4 COLLATE utf8mb4_general_ci;
 CREATE DATABASE `homemade` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `homemade`;
 
@@ -13,7 +14,7 @@ CREATE TABLE `user` (
   `email` varchar(200) NOT NULL,
   `password` blob NOT NULL, /* password crypté, blob pour stocker les données binaires */
   `token` varchar(200) DEFAULT NULL, /* token de connexion */
-  `role` enum('admin','creator','user') NOT NULL DEFAULT 'user', /* rôle de l'utilisateur */
+  `role` enum('admin','creator','user') NOT NULL DEFAULT 'user', /* role de l'utilisateur */
   `is_active` tinyint(1) NOT NULL DEFAULT '0', /* compte actif ou non */
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -26,9 +27,9 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 /* password = Motdepasse1 */
 INSERT INTO `user` VALUES 
-(1,'nom1','prenom1','mail1@gmail.fr','$2y$10$fKlFbOLEQleQgg/ZJUFag.Ie2.ZFU48OdHo9oEKHPfUZm9FTUBM4C','e50b173f4b343771873090875ba122c31787a866f58d448165fedeeb30624781','admin',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(1,'nom1','prenom1','mail1@gmail.fr','$2y$10$fKlFbOLEQleQgg/ZJUFag.Ie2.ZFU48OdHo9oEKHPfUZm9FTUBM4C','e50b173f4b343771873090875ba122c31787a866f58d448165fedeeb30624781','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
 (2,'nom2','prenom2','mail2@gmail.fr','$2y$10$aY3sqKvUdq5MhNEdPkO11e/oU34DxoUAp1kh5zE94XMQflgVGl0xq','65c8f67fbabdaca7579d44e88111df27276942311da079d2e108a7740c7347c9','creator',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(3,'nom3','prenom3','mail3@gmail.fr','$2y$10$FeXdrXdFYNBCRyThgKc54eO3RL7w2rWmlu4Y9yhL9WaUJT7/ujLDG','035c16778c36e7c7d61552c3992c9bf449c7103f33e209b911e402b92f4dcf1c','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,'nom3','prenom3','mail3@gmail.fr','$2y$10$FeXdrXdFYNBCRyThgKc54eO3RL7w2rWmlu4Y9yhL9WaUJT7/ujLDG','035c16778c36e7c7d61552c3992c9bf449c7103f33e209b911e402b92f4dcf1c','admin',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
 (4,'nom4','prenom4','mail4@gmail.fr','$2y$10$hA8VKa31mxpJc6BwhHxph.r0dmnV7z2D3i8bC/31tPHVHpdPSLNo.','d4cb014d02b09f7b97975c22d0e75f80ebf353f5488b4b377d5bccb90d32c94e','user',1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -76,7 +77,6 @@ CREATE TABLE `user_creator` (
   `creator_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_creator` (`user_id`,`creator_id`),
   KEY `user_id` (`user_id`),
@@ -87,10 +87,10 @@ CREATE TABLE `user_creator` (
 
 LOCK TABLES `user_creator` WRITE;
 INSERT INTO `user_creator` VALUES 
-(1,1,1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(2,2,2,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(3,3,3,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
-(4,4,4,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
+(1,1,1,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
+(2,2,2,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
+(3,3,3,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
+(4,4,4,'2020-05-01 00:00:00','2020-05-01 00:00:00');
 UNLOCK TABLES;
 
 /* Structure de la table `category` */
@@ -101,27 +101,28 @@ CREATE TABLE `category` (
   `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) /* nom unique */
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 LOCK TABLES `category` WRITE;
 INSERT INTO `category` VALUES 
-(1,'artiste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(2,'artisan','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(3,'créateur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(4,'designer','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(5,'écrivain','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(6,'entrepreneur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(7,'photographe','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(8,'producteur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(9,'réalisateur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(10,'scénariste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(11,'sportif','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(12,'technicien','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(13,'traducteur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(14,'vidéaste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(15,'autre','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00');
+(1,'artiste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(2,'artisan','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,'créateur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(4,'designer','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(5,'écrivain','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(6,'entrepreneur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(7,'photographe','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(8,'producteur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(9,'réalisateur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(10,'scénariste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(11,'sportif','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(12,'technicien','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(13,'traducteur','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(14,'vidéaste','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(15,'autre','https://picsum.photos/300','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 UNLOCK TABLES;
 
 /* Structure de la table `product` */
@@ -137,6 +138,7 @@ CREATE TABLE `product` (
   `link` varchar(200) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_creator` (`id_creator`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`id_creator`) REFERENCES `creator` (`id`)
@@ -144,14 +146,14 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 INSERT INTO `product` VALUES 
-(1,1,'nom du product1','peinture1.jpg',0,'description du product1',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(2,2,'nom du product2','sculpture1.jpg',0,'description du product2',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(3,3,'nom du product3','sculpture.jpg',1,'description du product3',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(4,4,'nom du product4','peinture.jpg',0,'description du product4',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(5,5,'nom du product5','couture1.jpg',1,'description du product5',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(6,6,'nom du product6','photographe1.jpg',1,'description du product6',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(7,7,'nom du product7','poterie1.jpg',1,'description du product7',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(8,8,'nom du product8','couture2.jpg',0,'description du product8',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00');
+(1,1,'nom du product1','peinture1.jpg',0,'description du product1',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(2,2,'nom du product2','sculpture1.jpg',0,'description du product2',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,3,'nom du product3','sculpture.jpg',1,'description du product3',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(4,4,'nom du product4','peinture.jpg',0,'description du product4',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(5,5,'nom du product5','couture1.jpg',1,'description du product5',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(6,6,'nom du product6','photographe1.jpg',1,'description du product6',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(7,7,'nom du product7','poterie1.jpg',1,'description du product7',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(8,8,'nom du product8','couture2.jpg',0,'description du product8',10.00,'https://www.google.com','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 UNLOCK TABLES;
 
 /* Structure de la table `category_product` */
@@ -189,6 +191,7 @@ CREATE TABLE `favorite` (
   `id_product` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   KEY `id_product` (`id_product`),
@@ -198,14 +201,14 @@ CREATE TABLE `favorite` (
 
 LOCK TABLES `favorite` WRITE;
 INSERT INTO `favorite` VALUES 
-(1,1,1,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(2,2,2,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(3,3,3,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(4,4,4,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(5,1,5,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(6,2,6,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(7,3,7,'2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(8,3,8,'2020-05-01 00:00:00','2020-05-01 00:00:00');
+(1,1,1,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(2,2,2,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,3,3,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(4,4,4,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(5,1,5,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(6,2,6,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(7,3,7,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(8,3,8,'2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 UNLOCK TABLES;
 
 /* Structure de la table `category_creator` */
@@ -244,6 +247,7 @@ CREATE TABLE `comments` (
   `comment` varchar(200) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_creator` (`id_creator`),
   KEY `id_product` (`id_product`),
@@ -253,14 +257,14 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 INSERT INTO `comments` VALUES 
-(1,1,1,'commentaire1','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(2,2,2,'commentaire2','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(3,3,3,'commentaire3','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(4,4,4,'commentaire4','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(5,5,5,'commentaire5','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(6,6,6,'commentaire6','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(7,7,7,'commentaire7','2020-05-01 00:00:00','2020-05-01 00:00:00'),
-(8,8,8,'commentaire8','2020-05-01 00:00:00','2020-05-01 00:00:00');
+(1,1,1,'commentaire1','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(2,2,2,'commentaire2','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(3,3,3,'commentaire3','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(4,4,4,'commentaire4','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(5,5,5,'commentaire5','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(6,6,6,'commentaire6','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(7,7,7,'commentaire7','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL),
+(8,8,8,'commentaire8','2020-05-01 00:00:00','2020-05-01 00:00:00',NULL);
 UNLOCK TABLES;
 
 /* Structure de la table `score` */

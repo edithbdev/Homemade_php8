@@ -1,6 +1,6 @@
-<?= self::returnTemplate('partials/header') ?>
+<?php include __DIR__ . '/../partials/header.php' ?>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-3 mb-5 w-100">
     <div class="col-lg-5 col-md-6 col-sm-6 col-12">
         <div class="card shadow-lg border-0 rounded-lg mt-3 mb-3">
             <div class="card-header">
@@ -38,19 +38,17 @@
                     <input type="password" class="form-control" name="password_login" id="password_login" />
                 </div>
                 <small class="text-right">
-                    <a href="<?= self::generateUrl('user_forgotPassword') ?>">Mot de passe oublié ?</a>
+                    <a href="<?= isset($generateUrlForgetPassword) ? $generateUrlForgetPassword : '' ?>">Mot de passe oublié ?</a>
                 </small>
                 <button type="submit" name="login" id="login" class="btn btn-outline-primary btn-lg btn-block w-100 my-3">
                     Se connecter
                 </button>
                 <p class="small text-right">
-                    Vous n'avez pas de compte ? <a href="<?= self::generateUrl('user_register') ?>">Inscrivez-vous</a>
+                    Vous n'avez pas de compte ? <a href="<?= isset($generateUrlRegister) ? $generateUrlRegister : '' ?>">Inscrivez-vous</a>
                 </p>
             </form>
         </div>
     </div>
 </div>
 
-
-
-<?= self::returnTemplate('partials/footer') ?>
+<?php include __DIR__ . '/../partials/footer.php' ?>

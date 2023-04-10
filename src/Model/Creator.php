@@ -1,13 +1,13 @@
 <?php
 
-namespace Model;
+namespace App\Model;
 
 use PDO;
 use Exception;
-use Service\PDOConnector;
+use App\Service\PDOConnector;
 
 /**
- * Model Creator
+ * Creator Model 
  *
  * Cette classe représente un créateur
  * Contient les propriétés et méthodes
@@ -15,494 +15,465 @@ use Service\PDOConnector;
 
 class Creator
 {
-    /**
-     * Creator lastname
-     *
-     * @var string
-     */
-    protected $lastname;
-
-    /**
-     * Creator firstname
-     *
-     * @var string
-     */
-    protected $firstname;
-
-    /**
-     * Get fullname
-     *
-     * @return  string
-     */
-    public function getFullName()
-    {
-        return $this->firstname . ' ' . $this->lastname;
-    }
-
-    /**
-     * Creator brand
-     * @var string
-     */
-    protected $brand;
-
-    /**
-     * Creator photo
-     * @var string
-     */
-    protected $photo;
-
-    /**
-     * Creator image
-     * @var string
-     */
-    protected $image;
-
-    /**
-     * Creator site_perso
-     * @var string
-     */
-    protected $site_perso;
-
-    /**
-     * Creator link_fb
-     * @var string
-     */
-    protected $link_fb;
-
-    /**
-     * Creator link_insta
-     * @var string
-     */
-    protected $link_insta;
-
-    /**
-     * Creator email
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * Creator phone
-     * @var string
-     */
-    protected $phone;
-
-    /**
-     * Creator description
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * Creator status
-     * @var string
-     */
-    protected $status;
-
-    /**
-     * Creator created_at
-     * @var string
-     */
-    protected $created_at;
-
-    /**
-     * Creator updated_at
-     * @var string
-     */
-    protected $updated_at;
-
-    /**
-     * Creator deleted_at
-     * @var string
-     */
-    protected $deleted_at;
-
-    /**
-     * Category du Creator
-     * @var Category
-     */
-    protected $category;
-
-    /**
-     * Get Category
-     * @return Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Set Category
-     * @param Category $category
-     * @return self
-     */
-    public function setCategory(Category $category)
-    {
-        $this->category = $category;
-        return $this;
-    }
-
-    /**
-     * id
+     /**
      * @var int
      */
     protected $id;
 
     /**
-     * Get id
+     * @var string
+     */
+    protected $lastname;
+
+    /**
+     * @var string
+     */
+    protected $firstname;
+
+    /**
+     * @var string
+     */
+    protected $brand;
+
+    /**
+     * @var string
+     */
+    protected $photo;
+
+    /**
+     * @var string
+     */
+    protected $image;
+
+    /**
+     * @var string
+     */
+    protected $site_perso;
+
+    /**
+     * @var string
+     */
+    protected $link_fb;
+
+    /**
+     * @var string
+     */
+    protected $link_insta;
+
+    /**
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * @var string
+     */
+    protected $phone;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $status;
+
+    /**
+     * @var string
+     */
+    protected $created_at;
+
+    /**
+     * @var string
+     */
+    protected $updated_at;
+
+    /**
+     * @var string|null
+     */
+    protected $deleted_at;
+
+    /**
+     * @var array<\App\Model\Category>
+     */
+    protected $categories = [];
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set id
      * @param int $id
      * @return self
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * Get lastname
      * @return string
      */
-    public function getLastname()
+    public function getLastname(): string
     {
         return $this->lastname;
     }
 
     /**
-     * Set lastname
      * @param string $lastname
      * @return self
      */
-    public function setLastname($lastname)
+    public function setLastname($lastname): self
     {
         $this->lastname = $lastname;
         return $this;
     }
 
     /**
-     * Get firstname
      * @return string
      */
-    public function getFirstname()
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
 
     /**
-     * Set firstname
      * @param string $firstname
      * @return self
      */
-    public function setFirstname($firstname)
+    public function setFirstname($firstname): self
     {
         $this->firstname = $firstname;
         return $this;
     }
 
     /**
-     * Get brand
      * @return string
      */
-    public function getBrand()
+    public function getFullName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBrand(): string
     {
         return $this->brand;
     }
 
     /**
-     * Set brand
      * @param string $brand
      * @return self
      */
-    public function setBrand($brand)
+    public function setBrand($brand): self
     {
         $this->brand = $brand;
         return $this;
     }
 
     /**
-     * Get photo
      * @return string
      */
-    public function getPhoto()
+    public function getPhoto(): string
     {
         return $this->photo;
     }
 
     /**
-     * Set photo
      * @param string $photo
      * @return self
      */
-    public function setPhoto($photo)
+    public function setPhoto($photo): self
     {
         $this->photo = $photo;
         return $this;
     }
 
     /**
-     * Get image
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
 
     /**
-     * Set image
      * @param string $image
      * @return self
      */
-    public function setImage($image)
+    public function setImage($image): self
     {
         $this->image = $image;
         return $this;
     }
 
     /**
-     * Get site_perso
      * @return string
      */
-    public function getSite_perso()
+    public function getSite_perso(): string
     {
         return $this->site_perso;
     }
 
     /**
-     * Set site_perso
      * @param string $site_perso
      * @return self
      */
-    public function setSite_perso($site_perso)
+    public function setSite_perso($site_perso): self
     {
         $this->site_perso = $site_perso;
         return $this;
     }
 
     /**
-     * Get link_fb
      * @return string
      */
-    public function getLink_fb()
+    public function getLink_fb(): string
     {
         return $this->link_fb;
     }
 
     /**
-     * Set link_fb
      * @param string $link_fb
      * @return self
      */
-    public function setLink_fb($link_fb)
+    public function setLink_fb($link_fb): self
     {
         $this->link_fb = $link_fb;
         return $this;
     }
 
     /**
-     * Get link_insta
      * @return string
      */
-    public function getLink_insta()
+    public function getLink_insta(): string
     {
         return $this->link_insta;
     }
 
     /**
-     * Set link_insta
      * @param string $link_insta
      * @return self
      */
-    public function setLink_insta($link_insta)
+    public function setLink_insta($link_insta): self
     {
         $this->link_insta = $link_insta;
         return $this;
     }
 
     /**
-     * Get email
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * Set email
      * @param string $email
      * @return self
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
         return $this;
     }
 
     /**
-     * Get phone
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
     /**
-     * Set phone
      * @param string $phone
      * @return self
      */
-    public function setPhone($phone)
+    public function setPhone($phone): self
     {
         $this->phone = $phone;
         return $this;
     }
 
     /**
-     * Get description
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * Set description
      * @param string $description
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
         return $this;
     }
 
     /**
-     * Get status
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
     /**
-     * Set status
      * @param string $status
      * @return self
      */
-    public function setStatus($status)
+    public function setStatus($status): self
     {
         $this->status = $status;
         return $this;
     }
 
     /**
-     * Get created_at
      * @return string
      */
-    public function getCreated_at()
+    public function getCreated_at(): string
     {
         return $this->created_at;
     }
 
     /**
-     * Set created_at
      * @param string $created_at
      * @return self
      */
-    public function setCreated_at($created_at)
+    public function setCreated_at($created_at): self
     {
         $this->created_at = $created_at;
         return $this;
     }
 
     /**
-     * Get updated_at
      * @return string
      */
-    public function getUpdated_at()
+    public function getUpdated_at(): string
     {
         return $this->updated_at;
     }
 
     /**
-     * Set updated_at
      * @param string $updated_at
      * @return self
      */
-    public function setUpdated_at($updated_at)
+    public function setUpdated_at($updated_at): self
     {
         $this->updated_at = $updated_at;
         return $this;
     }
 
     /**
-     * Get deleted_at
-     * @return string
+     * @return string|null
      */
-    public function getDeleted_at()
+    public function getDeleted_at(): ?string
     {
         return $this->deleted_at;
     }
 
     /**
-     * Set deleted_at
      * @param string $deleted_at
      * @return self
      */
-    public function setDeleted_at($deleted_at)
+    public function setDeleted_at($deleted_at): self
     {
         $this->deleted_at = $deleted_at;
         return $this;
     }
+    
+    /**
+     * @return array<mixed>
+     */
+    public function getCategories(): array
+    {
+        return (array) $this->categories; 
+    }
 
     /**
-     * On récupère les données de la table creator
-     *
-     * @param [int] $id
-     * @return Creator
+     * @param array<mixed> $categories
+     * @return self
      */
-    public static function find($id)
+    public function setCategories($categories): self
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
+    /**
+     * On ajoute une catégorie à la liste des catégories du créateur
+     * 
+     * @param Category $category
+     * 
+     * @return self
+     */
+    public function addCategory(Category $category): self
+    {
+        $this->categories[] = $category;
+        return $this;
+    }
+
+    /**
+     * On récupère les données d'un créateur en fonction de son id
+     * 
+     * @param int $id
+     * 
+     * @return Creator|false
+     */
+    public static function find(int $id): Creator|false
     {
         $pdo = PDOConnector::getInstance();
-        $request = $pdo->query('SELECT * FROM creator WHERE id = ' . $id);
+        $request = $pdo->query('SELECT * FROM creator WHERE id = ?', [$id]);
         return $request->fetchObject(self::class);
     }
 
     /**
      * On récupère toutes les données de la table creator
      *
-     * @return Creator[]
+     * @return array<mixed>
      */
-    public static function findAll()
+    public static function findAll(): array
     {
         $pdo = PDOConnector::getInstance();
+        //on récupère les données de la table creator
         $request = $pdo->query('SELECT * FROM creator');
         return $request->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
     /**
-     * On récupère les 3 derniers créateurs inscrits
+     * On récupère les 3 derniers créateurs inscrits et validés + leurs catégories
      *
-     * @return array
+     * @return array<mixed>
      */
-    public static function findLasts()
+    public static function findLasts(): array
     {
         $pdo = PDOConnector::getInstance();
-        $request = $pdo->query('SELECT * FROM creator ORDER BY created_at DESC LIMIT 3');
+        $request = $pdo->query("
+            SELECT creator.*, GROUP_CONCAT(category.name) AS categories
+            FROM creator
+            JOIN category_creator ON creator.id = category_creator.id_creator
+            JOIN category ON category_creator.id_category = category.id
+            WHERE creator.status = 'validated'
+            GROUP BY creator.id
+            ORDER BY creator.created_at DESC
+            LIMIT 3
+        "
+        );
+        
         return $request->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
@@ -511,17 +482,17 @@ class Creator
      * 
      * @return bool
      */
-    public function insert()
+    public function insert(): bool
     {
         $pdo = PDOConnector::getInstance();
         $request = $pdo->query(
-            'INSERT INTO creator (lastname, firstname, site_perso, link_fb, link_insta, mail, phone, image, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            'INSERT INTO creator (lastname, firstname, site_perso, link_fb, link_insta, email, phone, image, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $this->lastname, 
                 $this->firstname, 
                 $this->site_perso, 
                 $this->link_fb, 
                 $this->link_insta, 
-                $this->mail, 
+                $this->email, 
                 $this->phone, 
                 $this->image,
                 $this->description, 
@@ -529,11 +500,11 @@ class Creator
                 $this->created_at = date('Y-m-d H:i:s'),
                 $this->updated_at = date('Y-m-d H:i:s')
             ]);
-            $creator_id = $request[1]; // on récupère l'id du créateur inséré
+            $creator_id = $request[1]; 
             foreach($this->categories as $category) {
                 $request = $pdo->query(
                     'INSERT INTO category_creator (category_id, creator_id) VALUES (?, ?)', [
-                        $category->getId(),
+                        $category,
                         $creator_id
                     ]);
             }
@@ -547,17 +518,17 @@ class Creator
      *
      * @return bool
      */
-    public function update()
+    public function update(): bool
     {
         $pdo = PDOConnector::getInstance();
         $request = $pdo->query(
-            'UPDATE creator SET lastname = ?, firstname = ?, site_perso = ?, link_fb = ?, link_insta = ?, mail = ?, phone = ?, image = ?, description = ?, status = ?, updated_at = ? WHERE id = ?', [
+            'UPDATE creator SET lastname = ?, firstname = ?, site_perso = ?, link_fb = ?, link_insta = ?, email = ?, phone = ?, image = ?, description = ?, status = ?, updated_at = ? WHERE id = ?', [
                 $this->lastname, 
                 $this->firstname, 
                 $this->site_perso, 
                 $this->link_fb, 
                 $this->link_insta, 
-                $this->mail, 
+                $this->email, 
                 $this->phone, 
                 $this->image,
                 $this->description, 
@@ -581,7 +552,7 @@ class Creator
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $pdo = PDOConnector::getInstance();
         $pdo->query('DELETE FROM creator WHERE id = ?', [$this->id]);

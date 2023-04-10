@@ -1,8 +1,8 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Controller\BaseController;
+use App\Controller\BaseController;
 
 /**
  * Logout Controller

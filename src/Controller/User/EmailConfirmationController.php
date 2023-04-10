@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Model\User;
-use Controller\BaseController;
+use App\Model\User;
+use App\Controller\BaseController;
 
 /**
  * EmailConfirmation Controller

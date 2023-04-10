@@ -1,8 +1,8 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
-use Service\View;
+use App\Service\View;
 
 /**
  * Gestion des erreurs de l'application
@@ -13,9 +13,9 @@ class ErrorController extends BaseController
     /**
      * Methode pour gérer les erreurs 404
      *
-     * @return void
+     * @return string|false
      */
-    public function error404()
+    public function error404(): string|false
     {
         header("HTTP/1.1 404 Not Found");
         return View::returnTemplate('error/error404');

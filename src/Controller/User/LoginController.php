@@ -1,10 +1,10 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Model\User;
-use Service\View;
-use Controller\BaseController;
+use App\Model\User;
+use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * User Controller
@@ -15,12 +15,15 @@ class LoginController extends BaseController
     /**
      * Gérer la page de connexion (user_login route)
      * 
-     * @return void
+     * @return string|false
      */
-    public function login()
+    public function login(): string|false
     {
         $email = "";
         $errors = [];
+
+        $generateUrlForgetPassword = View::generateUrl('user_forgotPassword');
+        $generateUrlRegister = View::generateUrl('user_register');
 
         if (!empty($_POST)) {
             $errors = $this->validateLoginForm();
@@ -33,6 +36,7 @@ class LoginController extends BaseController
                 $user = User::login($email, $password);
 
                 if ($user) {
+                    //on redirige l'utilisateur vers la page d'accueil
                     $this->redirect('main_index');
                 }
             } else {
@@ -42,17 +46,19 @@ class LoginController extends BaseController
         }
 
         return View::returnTemplate('user/login', [
-            'errors' => $errors ?? [],
-            'email' => $email ?? ''
+            'generateUrlForgetPassword' => $generateUrlForgetPassword,
+            'generateUrlRegister' => $generateUrlRegister,
+            'errors' => $errors ? $errors : [],
+            'email' => $email ? $email : ''
         ]);
     }
 
     /**
      * Validate login form
      * 
-     * @return array
+     * @return array<string>
      */
-    private function validateLoginForm()
+    private function validateLoginForm(): array
     {
         $errors = [];
 

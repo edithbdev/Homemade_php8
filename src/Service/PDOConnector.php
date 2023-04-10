@@ -1,10 +1,11 @@
 <?php
 
-namespace Service;
+namespace App\Service;
 
 use PDO;
 use Exception;
 use PDOException;
+use PDOStatement;
 
 /**
  * Singleton pour gérer la connexion à la base de données à l'aide de PDO
@@ -31,11 +32,10 @@ class PDOConnector
      */
     private function __construct()
     {
-        define('DATABASE_USER', $_ENV['DATABASE_USER']);
-        define('DATABASE_ROOT_PASSWORD', $_ENV['DATABASE_ROOT_PASSWORD']);
         define('DATABASE_HOST', $_ENV['DATABASE_HOST']);
         define('DATABASE_NAME', $_ENV['DATABASE_NAME']);
-
+        define('DATABASE_USER', $_ENV['DATABASE_USER']);
+        define('DATABASE_ROOT_PASSWORD', $_ENV['DATABASE_ROOT_PASSWORD']);
         try {
             $this->connection = new PDO(
                 "mysql:host=" . DATABASE_HOST . ";dbname=" . DATABASE_NAME . "",
@@ -57,8 +57,9 @@ class PDOConnector
      */
     public static function getInstance(): self
     {
+        /** @phpstan-ignore-next-line */
         if (is_null(self::$instance)) {
-            self::$instance = new PDOCOnnector();
+            self::$instance = new PDOConnector();
         }
         return self::$instance;
     }
@@ -67,8 +68,11 @@ class PDOConnector
      * Exécuter une requête sur la connexion PDO
      *
      * @param string $query la query à exécuter
-     * @param array $args paramètres de requête facultatifs
+     * @param array<mixed> $args les arguments de la query
+     *
+     * @throws Exception
      */
+    /** @phpstan-ignore-next-line */
     public function query($query, array $args = [])
     {
         if ($args !== []) {

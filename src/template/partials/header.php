@@ -1,3 +1,10 @@
+<?php
+namespace App\Service;
+$loginRoute = View::generateUrl('user_login');
+$registerRoute = View::generateUrl('user_register');
+$logoutRoute = View::generateUrl('user_logout');
+$homeRoute = View::generateUrl('main_index');
+?>
 <!-- entête du site -->
 <!doctype html>
 <html lang="fr">
@@ -35,30 +42,30 @@ $page = $_GET['page'] ?? 'home';
         <div class="d-flex justify-content-end flex-column">
           <div class="col-6 pb-2 w-100">
             <?php if (!isset($_SESSION['user'])) : ?>
-              <a href="<?= self::generateUrl('user_login') ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Connexion</a>
+              <a href="<?= $loginRoute ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Connexion</a>
             <?php else : ?>
-              <a href="<?= self::generateUrl('user_logout') ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Déconnexion</a>
+              <a href="<?= $logoutRoute ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Déconnexion</a>
             <?php endif; ?>
           </div>
           <div class="col-6 pb-2 w-100">
             <?php if (!isset($_SESSION['user'])) : ?>
-              <a href="<?= self::generateUrl('user_register') ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Inscription</a>
+              <a href="<?= $registerRoute ?>" class="btn btn-sm btn-outline-light btn-lg btn-block">Inscription</a>
             <?php else : ?>
               <a href="/profile" class="btn btn-sm btn-outline-light btn-lg btn-block">Mon compte</a>
             <?php endif; ?>
           </div>
           <div class="col-6 w-100">
-            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'user') : ?>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === "user") : ?>
               <a href="/shop-create" class="btn btn-sm btn-outline-light btn-lg btn-block">Ouvrir un atelier</a>
             <?php endif; ?>
           </div>
           <div class="col-6 w-100">
-            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'creator') : ?>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === "creator") : ?>
               <a href="/shop" class="btn btn-sm btn-outline-light btn-lg btn-block">Mon atelier</a>
             <?php endif; ?>
           </div>
           <div class="col-6 w-100">
-            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin') : ?>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']->getRole() === "admin") : ?>
               <a href="/admin" class="btn btn-sm btn-outline-light btn-lg btn-block">Administration</a>
             <?php endif; ?>
           </div>
@@ -69,7 +76,19 @@ $page = $_GET['page'] ?? 'home';
         <p class="lead">L'atelier des créateurs</p>
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link <?php if ($page === 'home') echo 'active'; ?>" aria-current="page" href="<?= self::generateUrl('main_index') ?>">Accueil</a>
+            <a class="nav-link <?php if ($page === 'home') echo 'active'; ?>" aria-current="page" href="<?= $homeRoute ?>">Accueil</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Créateurs</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Catégories</a>

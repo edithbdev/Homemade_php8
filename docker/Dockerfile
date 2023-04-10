@@ -1,7 +1,8 @@
 # image php
-FROM php:8.1.5-apache
+FROM php:8.1-apache
 
 WORKDIR /var/www/html
+
 COPY . .
 
 # Pour résoudre le problème de permission
@@ -16,9 +17,10 @@ COPY src .
 RUN a2enmod ssl && a2enmod rewrite
 
 RUN mkdir -p /etc/apache2/ssl
-COPY ./dockerphp/ssl/*.pem /etc/apache2/ssl/
-COPY ./dockerphp/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./docker/ssl/*.pem /etc/apache2/ssl/
+COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
+# Configuration de php.ini
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN apt-get update && apt-get install -y \
@@ -28,7 +30,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libicu-dev \
     libzip-dev \
-    libpq-dev \
     libpng-dev \
     libjpeg-dev \
     libxml2-dev \
@@ -52,12 +53,14 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+# Installation de xdebug pour la couverture de code et l'analyse statique du code
+RUN pecl install xdebug && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 
 
 # Donner les droits d'exécution au script d'installation install_composer.sh
 RUN chmod +x install_composer.sh
 
-# Exécuter le script install_composer.sh
+# Exécuter le script install_composer.sh qui est dans le dossier src
 RUN sh ./install_composer.sh
 
 # Installation des dépendances avec composer

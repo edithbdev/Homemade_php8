@@ -9,7 +9,7 @@ services:
     container_name: php8
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
     restart: always
     environment:
       DB_PROVIDER: MySQL
@@ -19,6 +19,7 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
     env_file:
       - .env.dev
+      - .env.test
     volumes:
       - ./:/var/www/html
       -  /var/www/html/vendor
@@ -37,6 +38,9 @@ services:
     environment:
       DATABASE_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       DATABASE_NAME: ${DATABASE_NAME}
+    env_file:
+      - .env.dev
+      - .env.test
     ports:
       - "9906:3306"
     networks:

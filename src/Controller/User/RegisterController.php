@@ -1,10 +1,10 @@
 <?php
 
-namespace Controller\User;
+namespace App\Controller\User;
 
-use Model\User;
-use Service\View;
-use Controller\BaseController;
+use App\Model\User;
+use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * Register Controller
@@ -15,12 +15,14 @@ class RegisterController extends BaseController
     /**
      * Gérer la page d'inscription (user_register route)
      * 
-     * @return void
+     * @return string|false
      */
-    public function register()
+    public function register(): string|false
     {
         $lastname = $firstname = $email = "";
         $errors = [];
+         //on génère l'url de la page de connexion
+         $generateUrlLogin = View::generateUrl('user_login');
 
         // on vérifie que le formulaire a été soumis
         if (!empty($_POST)) {
@@ -48,19 +50,20 @@ class RegisterController extends BaseController
         }
 
         return View::returnTemplate('user/register', [
-            'errors' => $errors ?? [],
-            'lastname' => $lastname ?? '',
-            'firstname' => $firstname ?? '',
-            'email' => $email ?? ''
+            'generateUrlLogin' => $generateUrlLogin ? $generateUrlLogin : '',
+            'errors' => $errors ? $errors : [],
+            'lastname' => $lastname ? $lastname : '',
+            'firstname' => $firstname ? $firstname : '',
+            'email' => $email ? $email : ''
         ]);
     }
 
     /**
      * Validation du formulaire d'inscription
      * 
-     * @return array
+     * @return array<string>
      */
-    private function validateRegisterForm()
+    private function validateRegisterForm(): array
     {
         $errors = [];
 

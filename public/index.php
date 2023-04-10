@@ -5,11 +5,11 @@ require __DIR__ . '/../vendor/autoload.php';
 // Chargement des variables d'environnement
 use Dotenv\Dotenv;
 
-   // Ajouter le fichier .env.dev 
+   // Ajouter le fichier .env.dev
    $dotenv = Dotenv::createImmutable(__DIR__, '/../.env.dev');
    $dotenv->load();
 
-use Service\Router;
+use App\Service\Router;
 
    // Démarre la session si elle n'est pas déjà démarrée
    ob_start();

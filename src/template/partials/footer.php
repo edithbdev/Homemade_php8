@@ -1,7 +1,7 @@
 </main>
 
-<footer class="footer fixed-bottom">
-  <div class="container">
+<footer class="footer fixed-bottom bg-light" style="height: 40px; padding-top: 10px;">
+  <div class="container text-center">
     <span class="text-muted">@2023 by Homemade</span>
   </div>
 </footer>

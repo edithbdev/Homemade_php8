@@ -1,6 +1,6 @@
-<?= self::returnTemplate('partials/header') ?>
+<?php include __DIR__ . '/../partials/header.php' ?>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-3 mb-5 w-100">
     <div class="col-lg-5 col-md-6 col-sm-6 col-12">
         <div class="card shadow-lg border-0 rounded-lg mt-3 mb-3">
             <div class="card-header">
@@ -18,15 +18,15 @@
                     <?php endif; ?>
                     <div class="form-group">
                         <label class="form-label" for="inputLastName">Nom</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" value="<?= $lastname ?>" />
+                        <input type="text" class="form-control" name="lastname" id="lastname" value="<?= isset($lastname) ? $lastname : '' ?>" />
                     </div>
                     <div class="form-group">
                         <label class="form-label mt-2" for="inputFirstName">Prénom</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname" value="<?= $firstname ?>" />
+                        <input type="text" class="form-control" name="firstname" id="firstname" value="<?= isset($firstname) ? $firstname : '' ?>" />
                     </div>
                     <div class="form-group">
                         <label class="form-label mt-2" for="inputEmail">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="<?= $email ?>" />
+                        <input type="email" class="form-control" name="email" id="email" value="<?= isset($email) ? $email : '' ?>" />
                     </div>
                     <div class="form-group">
                         <label class="form-label mt-2" for="inputPassword">Mot de passe</label>
@@ -40,7 +40,7 @@
                         S'inscrire
                     </button>
                     <p class="small text-right">
-                        Vous avez déjà un compte ? <a href="<?= self::generateUrl('user_login') ?>">Connectez-vous</a>
+                        Vous avez déjà un compte ? <a href="<?= isset($generateUrlLogin) ? $generateUrlLogin : '' ?>">Connectez-vous</a>
                     </p>
                 </form>
             </div>
@@ -48,4 +48,4 @@
     </div>
 </div>
 
-<?= self::returnTemplate('partials/footer') ?>
+<?php include __DIR__ . '/../partials/footer.php' ?>
