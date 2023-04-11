@@ -32,7 +32,7 @@ $page = $_GET['page'] ?? 'home';
 
 <body>
   <main class="container">
-    <div class="mt-4 p-5 bg-secondary text-white rounded">
+    <div class="mt-4 py-3 px-4 bg-secondary text-white rounded">
       <div class="d-flex justify-content-between">
         <div>
           <?php if (isset($_SESSION['user'])) : ?>

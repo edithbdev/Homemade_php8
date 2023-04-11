@@ -11,6 +11,7 @@ J'utilise le modèle MVC (Model View Controller) pour structurer mon code.
 - [PHP 8](https://www.php.net/releases/8.0/en.php)
 - [composer](https://getcomposer.org/)
 - [MySQL](https://www.mysql.com/fr/)
+- [PDO](https://www.php.net/manual/fr/book.pdo.php)
 - [PHPMyAdmin](https://www.phpmyadmin.net/)
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
