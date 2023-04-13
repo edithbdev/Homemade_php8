@@ -4,6 +4,7 @@ $loginRoute = View::generateUrl('user_login');
 $registerRoute = View::generateUrl('user_register');
 $logoutRoute = View::generateUrl('user_logout');
 $homeRoute = View::generateUrl('main_index');
+$creatorRoute = View::generateUrl('creator_creators');
 ?>
 <!-- entête du site -->
 <!doctype html>
@@ -81,7 +82,7 @@ $page = $_GET['page'] ?? 'home';
           <li class="nav-item dropdown">
             <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Créateurs</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="<?= $creatorRoute ?>">Liste des créateurs</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
               <li>
@@ -93,7 +94,7 @@ $page = $_GET['page'] ?? 'home';
           <li class="nav-item dropdown">
             <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Catégories</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Liste des catégories</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
               <li>

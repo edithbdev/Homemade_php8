@@ -75,6 +75,12 @@ class Router
             "User\ResetPasswordController",
             "resetPassword"
         ],
+        "creator_creators" => [
+            "creators",
+            "GET",
+            "Creator\CreatorIndexController",
+            "index"
+        ],
     ];
 
     /**

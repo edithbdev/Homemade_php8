@@ -449,8 +449,17 @@ class Creator
     public static function findAll(): array
     {
         $pdo = PDOConnector::getInstance();
-        //on récupère les données de la table creator
-        $request = $pdo->query('SELECT * FROM creator');
+        $request = $pdo->query("
+            SELECT creator.*, GROUP_CONCAT(category.name) AS categories
+            FROM creator
+            JOIN category_creator ON creator.id = category_creator.id_creator
+            JOIN category ON category_creator.id_category = category.id
+            WHERE creator.status = 'validated'
+            GROUP BY creator.id
+            ORDER BY creator.created_at DESC
+        "
+        );
+
         return $request->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 

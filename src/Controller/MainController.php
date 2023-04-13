@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Creator;
 use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * Main Controller

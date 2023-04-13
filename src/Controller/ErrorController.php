@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\View;
+use App\Controller\BaseController;
 
 /**
  * Gestion des erreurs de l'application
